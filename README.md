@@ -62,3 +62,57 @@ Y_train = np.array((m,o)) , where m : No. of total clips(all activities included
 After our data has been prepared, we built a simple LSTM architecture to train our model on.
 This step is really important as our models learning performance depends totally on the
 algorithm and architecture chosen. We went with the following:
+
+![image](https://user-images.githubusercontent.com/59787095/140625558-315dfe33-38ee-419d-bf43-d4d658db1a1a.png)
+
+
+“Binary-cross entropy” loss was computed for each iteration and “adams” optimizer formulas
+were used to update the weights. The whole layout was constructed with the help of Tensorflow
+library
+
+# iv. Training &Testing
+The above architecture has been trained for 12 epochs. We had to keep in mind not to
+unnecessarily over fit the data. Also, given the fact that the optimizer chosen is “adams”, hence
+the optimizing of weights takes place at a lot quicker speed. These reasons led us to finalise on
+12 epochs
+The model was later tested successfully giving the expected results. For testing, the pose
+landmarks is obtained and passed through the trained weights frame by frame, giving a
+probability of the activities as output
+
+# RESULTS
+The model was successfully trained with 94% accuracy giving a rendered video with output at
+20fps.We can also enable it using webcam. It takes in the past 100 frames of real time and
+predicts an output at every frame. 
+
+![image](https://user-images.githubusercontent.com/59787095/140625594-a56463d8-c10a-430e-81fa-5e2f43ea6224.png)
+![image](https://user-images.githubusercontent.com/59787095/140625603-e066d6a7-ec90-4f1e-b6cd-1df7129390ad.png)
+
+Our aim was to get the model to learn the behavioural gesture for each activity. That could be
+done by estimating pose with the help of mediapipe library giving 33 landmarks on one’s body.
+Our intentions to correctly study the movement of these pose landmarks over a series of 100
+frames was achieved with the help of LSTM algorithm. The architecture mentioned in the above
+section was able to form an understanding of the body movements and classify various activities
+successfully.
+Our model has shown 12% increase in accuracy while achieving much better fps when compared
+to the rest.
+
+![image](https://user-images.githubusercontent.com/59787095/140625625-c3389a69-bf9c-4f4e-9781-7cf71dd7ea65.png)
+
+
+# Conclusion
+
+The details mentioned in the proposed method was our method of doing this project. This same
+project can be done in other ways too. This particular project/code can be analyzed, explored and
+improved and can be used in real world application. Human Activity Recognition is currently
+being used in several fields for different purposes and these fields is not just restricted to
+technology field. Apart from technology field, it is being used in medicine field, psychology
+field, commercial purpose and many other field. This indicates the scope of this algorithm is so
+powerful that it still has potential to increase its usage rate. We believe that machine learning
+engineers should utilize this algorithm for their project and moreover, even researchers can dig
+deep into this.
+We achieved 94% accuracy with LSTM training, media pipe library and training 100 frames per
+second. We compared this model with other model, for example without media pipe or using
+RNN training. After comparing we discovered that LSTM with media pipe achieved best results.
+
+
+
