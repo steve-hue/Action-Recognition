@@ -1,5 +1,6 @@
-Annexure
-#IMPORT LIRARIES# 
+THE WHOLE CODE
+
+# IMPORT LIRARIES
 
 import cv2
 import mediapipe as mp
@@ -13,9 +14,9 @@ import tensorflow as tf
 from tensorflow.keras.layers import Input,LSTM,Dense,Flatten,Dropout
 from tensorflow.keras.models import Model
 
-#PREPARE INPUT DATA IN ARRAY FORM# 
+# PREPARE INPUT DATA IN ARRAY FORM# 
 
-#FOR DRIBBLE# 
+# FOR DRIBBLE#
 
 length=[]
 j=np.zeros((230,100,66))
@@ -33,14 +34,14 @@ e))
  min_tracking_confidence=0.5) as pose:
  while cap.isOpened():
  success, image = cap.read()
- # Flip the image horizontally for a later selfie-view display, and convert
- # the BGR image to RGB.
+ #Flip the image horizontally for a later selfie-view display, and convert
+ #the BGR image to RGB.#
  image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
- # To improve performance, optionally mark the image as not writeable to
- # pass by reference.
+ #To improve performance, optionally mark the image as not writeable to
+ #pass by reference.
  image.flags.writeable = False
  results = pose.process(image)
- # Draw the pose annotation on the image.
+ #Draw the pose annotation on the image.
  image.flags.writeable = True
  image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
  mp_drawing.draw_landmarks(
@@ -68,7 +69,7 @@ e))
 mm=0
 length=[]
  
-#FOR SITUP# 
+# FOR SITUP#
 
 for filename in os.listdir(r"C:\Users\STEVE\Desktop\samples\situp\situp_lite"):
  cap = 
@@ -82,14 +83,14 @@ cv2.VideoCapture(os.path.join(r"C:\Users\STEVE\Desktop\samples\situp\situp_lite"
  min_tracking_confidence=0.5) as pose:
  while cap.isOpened():
  success, image = cap.read()
- # Flip the image horizontally for a later selfie-view display, and convert
- # the BGR image to RGB.
+ #Flip the image horizontally for a later selfie-view display, and convert
+ #the BGR image to RGB.
  image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
- # To improve performance, optionally mark the image as not writeable to
- # pass by reference.
+ #To improve performance, optionally mark the image as not writeable to
+ #pass by reference.
  image.flags.writeable = False
  results = pose.process(image)
- # Draw the pose annotation on the image.
+ #Draw the pose annotation on the image.
  image.flags.writeable = True
  image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
  mp_drawing.draw_landmarks(
@@ -115,8 +116,8 @@ cv2.VideoCapture(os.path.join(r"C:\Users\STEVE\Desktop\samples\situp\situp_lite"
  print(len) 
  m=m+1
  mm=mm+1 
- 
-#FOR PULLUP# 
+
+# FOR PULLUP
 
 mm=0
 length=[]
@@ -133,14 +134,14 @@ cv2.VideoCapture(os.path.join(r"C:\Users\STEVE\Desktop\samples\pullup\pullup_lit
  min_tracking_confidence=0.5) as pose:
  while cap.isOpened():
  success, image = cap.read()
- # Flip the image horizontally for a later selfie-view display, and convert
- # the BGR image to RGB.
+ #Flip the image horizontally for a later selfie-view display, and convert
+ #the BGR image to RGB.
  image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
- # To improve performance, optionally mark the image as not writeable to
- # pass by reference.
+ #To improve performance, optionally mark the image as not writeable to
+ #pass by reference.
  image.flags.writeable = False
  results = pose.process(image)
- # Draw the pose annotation on the image.
+ #Draw the pose annotation on the image.
  image.flags.writeable = True
  image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
  mp_drawing.draw_landmarks(
@@ -168,14 +169,14 @@ cv2.VideoCapture(os.path.join(r"C:\Users\STEVE\Desktop\samples\pullup\pullup_lit
  mm=mm+1 
 j.shape
 w4d=j.reshape(230,6600)
-#SAVING THE INPUT ARRAY TO ACCESS IT LATER# 
+# SAVING THE INPUT ARRAY TO ACCESS IT LATER
 np.savetxt('train_array_mediapipe2.txt', w4d)
 w=np.loadtxt("train_array_mediapipe2.txt")
 w.shape
 w=w.reshape(230,100,66)
 w.shape
 
-#CREATING THE EXPECTED OUTPUT DATA FOR TRAINING# 
+# CREATING THE EXPECTED OUTPUT DATA FOR TRAINING#
 
 oo=[[1,0,0]]*85#dribble
 ooo=[[0,1,0]]*(152-85)#situp
@@ -183,7 +184,7 @@ oooo=[[0,0,1]]*(230-152)#pullup
 ytrain=np.concatenate([np.array(oo),np.array(ooo),np.array(oooo)])
 ytrain.shape
  
-#PREPARING DATA AND THEN TRAINING# 
+# PREPARING DATA AND THEN TRAINING
 
 from sklearn.utils import shuffle
 x_train,y_train = shuffle(w,ytrain)
@@ -198,7 +199,7 @@ model=Model(i,x)
 model.compile(optimizer="adam",loss="binary_crossentropy",metrics=["accuracy"])
 r=model.fit(x_train,y_train,epochs=12)
 
-#DEFINING FUCTION FOR PREDICTION# 
+# DEFINING FUCTION FOR PREDICTION 
 
 def action(pr):
  qq=0
@@ -210,17 +211,17 @@ def action(pr):
  
  if count==0:
  cc="dribbling"
- # print("stop dribbling you dipshit")
+
  
  elif count==1:
  cc="situp"
- #print("Mr. undertaker my ass")
+
  elif count==2:
  cc="pullups"
- # print("Dawg! thats not how you do pullup asshole")
+
 return cc 
 
-#USING WEB CAM TO TEST OUR MODEL# 
+# USING WEB CAM TO TEST OUR MODEL
 
 #cap=cv2.VideoCapture(r"C:\Users\STEVE\Desktop\samples\pullup\pullup_lite\46_Pull_ups
 _pullup_f_cm_np1_fr_bad_2.avi")
@@ -235,14 +236,14 @@ with mp_pose.Pose(
  min_tracking_confidence=0.5) as pose:
  while cap.isOpened():
  success, image = cap.read()
- # Flip the image horizontally for a later selfie-view display, and convert
- # the BGR image to RGB.
+ #Flip the image horizontally for a later selfie-view display, and convert
+ #the BGR image to RGB.
  image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
- # To improve performance, optionally mark the image as not writeable to
- # pass by reference.
+ #To improve performance, optionally mark the image as not writeable to
+ #pass by reference.
  image.flags.writeable = False
  results = pose.process(image)
- # Draw the pose annotation on the image.
+ #Draw the pose annotation on the image.
  image.flags.writeable = True
  image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
  mp_drawing.draw_landmarks(
@@ -276,7 +277,7 @@ with mp_pose.Pose(
  break
 cap.release()
  
-#TESTING OUR MODEL WITH SAMPLE CLIPS# 
+# TESTING OUR MODEL WITH SAMPLE CLIPS
 
 cap=cv2.VideoCapture(r"C:\Users\STEVE\Desktop\samples\testing\10YearOldYouthBasket
 ballStarBaller_dribble_f_cm_np1_fr_med_2.avi")
@@ -291,14 +292,14 @@ with mp_pose.Pose(
  min_tracking_confidence=0.5) as pose:
  while cap.isOpened():
  success, image = cap.read()
- # Flip the image horizontally for a later selfie-view display, and convert
- # the BGR image to RGB.
+ #Flip the image horizontally for a later selfie-view display, and convert
+  the BGR image to RGB.
  image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
- # To improve performance, optionally mark the image as not writeable to
- # pass by reference.
+ #to improve performance, optionally mark the image as not writeable to
+ #pass by reference.
  image.flags.writeable = False
  results = pose.process(image)
- # Draw the pose annotation on the image.
+ #Draw the pose annotation on the image.
  image.flags.writeable = True
  image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
  mp_drawing.draw_landmarks(
